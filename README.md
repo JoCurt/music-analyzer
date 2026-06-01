@@ -1,3 +1,18 @@
+# music-analyzer 
+This a project as part of achieving my university degree. As an application this project aims to analyse songs by uploading an MP3 audio file, which will be analysed in an python based backend application. The analysed data will be presented in an Angular based frontend.
+
+# MVP
+- Upload audio file
+- Play back audio
+- Present basic information (title, length)
+
+# Nice-to-have
+- Beat tracking
+- Chord visualization
+- CSS styling
+
+
+
 # MusicAnalyzerGui
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.12.
