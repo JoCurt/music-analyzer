@@ -9,4 +9,7 @@ export class AudioFileService {
   saveFile(file: File | null = null) {
     this.audioFile = file;
   }
+  getFile(): File | null {
+    return this.audioFile;
+  }
 }
