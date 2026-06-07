@@ -1,7 +1,7 @@
-import {Component, EventEmitter} from '@angular/core';
-import { AudioFileService} from '../audio-file-service/audio-file-service';
+import {Component, Inject} from '@angular/core';
+import { Router} from '@angular/router';
+import { AudioFileService } from '../audio-file-service/audio-file-service';
 
-import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,11 +11,21 @@ import { Injectable } from '@angular/core';
 })
 
 export class LandingPage {
-// TODO: Add saving audio file as audio-file-service
-// onFileSelected(any: any) {
-//   const file = event.target.files[0];
-//   const audiofile = new AudioFileService();
-// }
+
+  constructor(
+    private audioFileService: AudioFileService,
+    private router: Router
+  ) {}
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.audioFileService.saveFile(input.files[0]);
+
+      this.router.navigate(['/music-player']);
+    }
+
+  }
 
 
 }
