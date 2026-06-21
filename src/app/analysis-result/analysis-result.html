@@ -1,0 +1,17 @@
+<p>analysis-result works!</p>
+
+<!-- Minimal "does this work" version. No styling, just raw output. -->
+<div>
+  <p>Status: {{ status }}</p>
+
+  <p *ngIf="errorMessage">Error: {{ errorMessage }}</p>
+
+  <div *ngIf="result as r">
+    <p>Key: {{ r.key }}</p>
+    <ul>
+      <li *ngFor="let c of r.chords">
+        {{ c.time }} - {{ c.chord }}
+      </li>
+    </ul>
+  </div>
+</div>
