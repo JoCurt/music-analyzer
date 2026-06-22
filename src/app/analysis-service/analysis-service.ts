@@ -43,6 +43,7 @@ export class AnalysisService {
 
     this.http.post<AnalysisResult>(this.apiUrl, formData).subscribe({
       next: (result) => {
+        // console.log('Got result from server:', result);
         this.result$.next(result);
         this.status$.next('success');
       },

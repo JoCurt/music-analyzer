@@ -1,17 +1,17 @@
 <p>analysis-result works!</p>
 
-<!-- Minimal "does this work" version. No styling, just raw output. -->
-<div>
-  <p>Status: {{ status }}</p>
+@if (result) {
+  <p>Key: {{ result.key }}</p>
+  <p>Tempo: {{ result.tempo_bpm }} BPM</p>
+<!--  <p>Duration: {{ result.duration_seconds }}s</p>-->
+<!--  <p>Confidence: {{ result.key_confidence * 100 | number:'1.0-0' }}%</p>-->
 
-  <p *ngIf="errorMessage">Error: {{ errorMessage }}</p>
-
-  <div *ngIf="result as r">
-    <p>Key: {{ r.key }}</p>
-    <ul>
-      <li *ngFor="let c of r.chords">
-        {{ c.time }} - {{ c.chord }}
-      </li>
-    </ul>
-  </div>
-</div>
+  @for (chord of result.chords; track chord.time) {
+    <div>
+      <span>{{ chord.time | number:'1.1-1' }}s</span>
+      <span>{{ chord.chord }}</span>
+    </div>
+  }
+} @else {
+  <p>Waiting for analysis...</p>
+}

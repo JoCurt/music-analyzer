@@ -4,11 +4,12 @@ import { AudioFileService } from '../audio-file-service/audio-file-service';
 import { BasicInformation} from '../basic-information/basic-information';
 
 import WaveSurfer from 'wavesurfer.js';
+import {AnalysisResultComponent} from '../analysis-result/analysis-result';
 
 @Component({
   selector: 'music-player',
   standalone: true,
-  imports: [BasicInformation],
+  imports: [BasicInformation, AnalysisResultComponent],
   templateUrl: './music-player.html',
   styleUrl: './music-player.css',
 })
