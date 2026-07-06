@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrentPlayerTimestampService {
-  currentTimestamp: number | undefined;
+  public currentTimestamp$ = new BehaviorSubject<number>(0);
 
-  updateTime(timestamp: number | undefined): void {
-    this.currentTimestamp = timestamp;
+  updateTime(time: number) {
+    this.currentTimestamp$.next(time);
   }
 }
+

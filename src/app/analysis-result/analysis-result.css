@@ -1,0 +1,45 @@
+.chord-grid-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 8px; /* Adds space between your chord blocks */
+  margin-top: 1rem;
+  table-layout: fixed; /* Forces all columns to be exactly equal width */
+}
+
+.chord-grid-table td {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.15s ease-in-out;
+}
+
+.chord-cell-content {
+  display: flex;
+  flex-direction: column; /* Puts chord name on top, timestamp on bottom */
+  gap: 4px;
+}
+
+.chord-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.chord-time {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Emphasize the specific active cell */
+.chord-grid-table td.highlighted-cell {
+  background-color: #e0e7ff !important; /* Soft indigo tint */
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+  transform: scale(1.02); /* Makes it pop slightly */
+}
+
+.chord-grid-table td.highlighted-cell .chord-name {
+  color: #4f46e5; /* Turns text blue/indigo when active */
+}

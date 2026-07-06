@@ -1,17 +1,25 @@
-<p>analysis-result works!</p>
-
 @if (result) {
   <p>Key: {{ result.key }}</p>
   <p>Tempo: {{ result.tempo_bpm }} BPM</p>
-<!--  <p>Duration: {{ result.duration_seconds }}s</p>-->
-<!--  <p>Confidence: {{ result.key_confidence * 100 | number:'1.0-0' }}%</p>-->
 
-  @for (chord of result.chords; track chord.time) {
-    <div>
-      <span>{{ chord.time | number:'1.1-1' }}s</span>
-      <span>{{ chord.chord }}</span>
-    </div>
-  }
+  <table class="chord-grid-table">
+    <tbody>
+      @for (row of chordRows; track $index) {
+        <tr>
+          @for (chord of row; track chord.time) {
+            <td [class.highlighted-cell]="currentChord && chord.time === currentChord.time">
+              <div class="chord-cell-content">
+                <span class="chord-name">{{ chord.chord }}</span>
+                <span class="chord-time">{{ chord.time | number:'1.1-1' }}s</span>
+              </div>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+
 } @else {
   <p>Waiting for analysis...</p>
 }
+

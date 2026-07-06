@@ -33,6 +33,17 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
       progressColor: '#06B6D4'
     });
 
+    // Transfer current player timestamp tp current-player-timestamp-service
+    this.wave.on('audioprocess', (currentTime: number) => {
+      this.currentTimestampService.updateTime(currentTime);
+    });
+
+    // Listen for when the user clicks/seeks on the waveform
+    this.wave.on('interaction', () => {
+      const exactTime = this.wave.getCurrentTime();
+      this.currentTimestampService.updateTime(exactTime);
+    });
+
     if (this.audioFile) {
 
       if (this.audioFile instanceof Blob || this.audioFile instanceof File) {
@@ -42,16 +53,6 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
         this.wave.load(this.audioFile);
       }
 
-      // Transfer current player timestamp tp current-player-timestamp-service
-      this.wave.on('audioprocess', (currentTime: number) => {
-        this.currentTimestampService.updateTime(currentTime);
-      });
-
-      // Listen for when the user clicks/seeks on the waveform
-      this.wave.on('interaction', () => {
-        const exactTime = this.wave.getCurrentTime();
-        this.currentTimestampService.updateTime(exactTime);
-      });
     }
   }
 
