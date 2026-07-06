@@ -4,7 +4,8 @@ import { AudioFileService } from '../audio-file-service/audio-file-service';
 import { BasicInformation} from '../basic-information/basic-information';
 
 import WaveSurfer from 'wavesurfer.js';
-import {AnalysisResultComponent} from '../analysis-result/analysis-result';
+import { AnalysisResultComponent } from '../analysis-result/analysis-result';
+import { CurrentPlayerTimestampService } from '../current-player-timestamp-service/current-player-timestamp-service';
 
 @Component({
   selector: 'music-player',
@@ -15,6 +16,7 @@ import {AnalysisResultComponent} from '../analysis-result/analysis-result';
 })
 export class MusicPlayer implements AfterViewInit, OnDestroy {
   private audioService = inject(AudioFileService);
+  private currentTimestampService = inject(CurrentPlayerTimestampService);
 
   @ViewChild('waveformContainer') waveformContainer!: ElementRef;
 
@@ -39,6 +41,17 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
       } else {
         this.wave.load(this.audioFile);
       }
+
+      // Transfer current player timestamp tp current-player-timestamp-service
+      this.wave.on('audioprocess', (currentTime: number) => {
+        this.currentTimestampService.updateTime(currentTime);
+      });
+
+      // Listen for when the user clicks/seeks on the waveform
+      this.wave.on('interaction', () => {
+        const exactTime = this.wave.getCurrentTime();
+        this.currentTimestampService.updateTime(exactTime);
+      });
     }
   }
 
