@@ -1,1 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
+
+html {
+  color-scheme: light dark;
+  @include mat.theme(
+  (
+  color: mat.$violet-palette,
+  typography: (
+  plain-family: 'Raleway',
+  brand-family: 'Raleway',
+  bold-weight: 700,
+  medium-weight: 500,
+  regular-weight: 400
+  ),
+  density: 0
+  )
+  );
+
+  @include mat.theme-overrides(
+  (
+  primary: light-dark(#894977, #fdaee3),
+  'on-primary': light-dark(#fff7f9, #662a56),
+  'primary-container': light-dark(#fdaee3, #d389bb),
+  'on-primary-container': light-dark(#662a56, #420a37),
+  secondary: light-dark(#a03b62, #ffb1c8),
+  'on-secondary': light-dark(#fff7f7, #781a43),
+  'secondary-container': light-dark(#ffd9e2, #71153e),
+  'on-secondary-container': light-dark(#8f2d54, #ffa5c1),
+  tertiary: light-dark(#695b65, #fff7f9),
+  'on-tertiary': light-dark(#fff7f9, #695b65),
+  'tertiary-container': light-dark(#ffebf8, #f9e6f2),
+  'on-tertiary-container': light-dark(#645660, #60535d),
+  error: light-dark(#bb1b1b, #ff7164),
+  'on-error': light-dark(#fff7f6, #4a0002),
+  'error-container': light-dark(#fe4e44, #ac0c12),
+  'on-error-container': light-dark(#570003, #ffb8b0),
+  surface: light-dark(#fff8f8, #1b080f),
+  'on-surface': light-dark(#442b34, #ffdde6),
+  'on-surface-variant': light-dark(#745760, #c5a2ac),
+  'surface-container': light-dark(#ffe8ed, #28131b),
+  'surface-container-high': light-dark(#ffe1e8, #2f1921),
+  'surface-container-highest': light-dark(#ffd9e3, #361f27),
+  'surface-container-low': light-dark(#fff0f3, #210d15),
+  'surface-container-lowest': light-dark(#ffffff, #000000),
+  'surface-bright': light-dark(#fff8f8, #3d252d),
+  'surface-dim': light-dark(#f7d0db, #1b080f),
+  'surface-variant': light-dark(#ffd9e3, #361f27),
+  'surface-tint': light-dark(#894977, #fdaee3),
+  'inverse-surface': light-dark(#1b080f, #fff8f8),
+  'inverse-on-surface': light-dark(#b6949e, #6a4d56),
+  'inverse-primary': light-dark(#fdaee3, #894977),
+  outline: light-dark(#92727c, #8c6d77),
+  'outline-variant': light-dark(#cca9b3, #5b4049),
+  background: light-dark(#fff8f8, #1b080f),
+  'on-background': light-dark(#442b34, #ffdde6),
+  scrim: light-dark(#000000, #000000),
+  shadow: light-dark(#000000, #000000),
+  )
+  );
+
+  @include mat.sidenav-overrides(
+  (
+  'container-width': '250px',
+  )
+  );
+}
