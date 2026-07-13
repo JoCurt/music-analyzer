@@ -12,7 +12,7 @@ import { CurrentPlayerTimestampService } from '../current-player-timestamp-servi
   standalone: true,
   imports: [BasicInformation, AnalysisResultComponent],
   templateUrl: './music-player.html',
-  styleUrl: './music-player.css',
+  styleUrl: './music-player.scss',
 })
 export class MusicPlayer implements AfterViewInit, OnDestroy {
   private audioService = inject(AudioFileService);
@@ -29,8 +29,8 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
 
     this.wave = WaveSurfer.create({
       container: this.waveformContainer.nativeElement,
-      waveColor: '#4F46E5',
-      progressColor: '#06B6D4'
+      waveColor: '#f3e0ecff',
+      progressColor: '#dca3b8'
     });
 
     // Transfer current player timestamp tp current-player-timestamp-service

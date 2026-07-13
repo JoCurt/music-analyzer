@@ -1,17 +1,20 @@
 
-<div class="waveform" #waveformContainer (click)="wave.playPause()" id="waveform"></div>
+<div class="player-bar">
+  <div class="waveform" #waveformContainer (click)="wave.playPause()" id="waveform"></div>
 
-<div class="btn-group">
-  <button (click)="wave.play()" class="btn btn-primary active">
-    <i class="fa fa-play"></i>
-  </button>
-  <button (click)="wave.pause()" class="btn btn-primary">
-    <i class="fa fa-pause"></i>
-  </button>
-  <button (click)="wave.stop()" class="btn btn-primary">
-    <i class="fa fa-stop"></i>
-  </button>
+  <div class="btn-group">
+    <button (click)="wave.play()" class="btn btn-primary active">
+      <i class="fa fa-play"></i>
+    </button>
+    <button (click)="wave.pause()" class="btn btn-primary">
+      <i class="fa fa-pause"></i>
+    </button>
+    <button (click)="wave.stop()" class="btn btn-primary">
+      <i class="fa fa-stop"></i>
+    </button>
+  </div>
+</div>
   <app-basic-information></app-basic-information>
 
   <app-analysis-result></app-analysis-result>
-</div>
+

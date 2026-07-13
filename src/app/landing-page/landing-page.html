@@ -1,3 +1,34 @@
-<p>Select a song:</p>
+<div class="page-container">
+  <div class="hero-card">
 
-<input type="file" accept="audio/*" (change)="onFileSelected($event)">
+    <h2>Chord Progression Analyzer</h2>
+
+    <p class="subtitle">
+      Upload an MP3 file to detect its musical key and chord progression.
+    </p>
+    <hr>
+    <div class="upload-section">
+      <label class="upload-label" for="song-upload">
+        Select a song
+      </label>
+
+      <input
+        id="song-upload"
+        type="file"
+        accept="audio/*"
+        (change)="onFileSelected($event)"
+        class="visually-hidden">
+    </div>
+    <hr>
+    <div class="info-card">
+      <h2>About this project</h2>
+
+      <p>
+        This website is the result of a university project. After uploading
+        an MP3 file, the application analyses the audio and predicts the key
+        and chord progression of the song.
+      </p>
+    </div>
+
+  </div>
+</div>

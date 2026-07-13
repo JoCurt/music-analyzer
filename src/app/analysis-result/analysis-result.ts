@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
     DecimalPipe
   ],
   templateUrl: './analysis-result.html',
-  styleUrl: './analysis-result.css',
+  styleUrl: './analysis-result.scss',
 })
 export class AnalysisResultComponent implements OnInit, OnDestroy {
   result: AnalysisResult | null = null;

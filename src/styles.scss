@@ -1,0 +1,25 @@
+    @use 'variables' as *;
+
+
+
+
+body {
+  background-color: $center-background;
+  color: $text-color;
+  margin: 2%;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: $midnight-violet;
+}
+
+button {
+  border: none;
+  background-color: $lavender-veil;
+  color: $midnight-violet;
+}

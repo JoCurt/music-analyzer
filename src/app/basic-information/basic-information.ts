@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
   selector: 'app-basic-information',
   imports: [],
   templateUrl: './basic-information.html',
-  styleUrl: './basic-information.css',
+  styleUrl: './basic-information.scss',
 })
 export class BasicInformation implements OnInit, OnDestroy {
   audioFileService = inject(AudioFileService);
