@@ -8,19 +8,21 @@
 
   <div class="controls">
     <div class="btn-group">
-      <button (click)="togglePlayback()" class="btn btn-primary" >
-        <!-- Logic for replacing Logo (play/pause) -->
+<!--      TODO: ADD ICONS TO BUTTONS-->
+      <button  class="btn rewind" (click)="wave.setTime(wave.getCurrentTime()-5)">
       </button>
-        <!--  TODO: DELETE THE FOLLOWING BUTTONS AFTER COMPLETION OF PLAYER-BAR UI   -->
-<!--      <button (click)="wave.play()" class="btn btn-primary active">-->
-<!--        <i class="fa fa-play"></i>-->
-<!--      </button>-->
-<!--      <button (click)="wave.pause()" class="btn btn-primary">-->
-<!--        <i class="fa fa-pause"></i>-->
-<!--      </button>-->
-<!--      <button (click)="wave.stop()" class="btn btn-primary">-->
-<!--        <i class="fa fa-stop"></i>-->
-<!--      </button>-->
+      <button (click)="togglePlayback()" class="btn btn-primary" >
+      </button>
+      <button class="btn skip" (click)="wave.setTime(wave.getCurrentTime()+5)">
+      </button>
+
+      <select class="dropdown-speed" (change)="onSpeedChange($event)">
+        <option value="0.5">0.5x</option>
+        <option value="1.0" selected>1.0x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2.0">2.0x</option>
+      </select>
+
     </div>
 
     <input

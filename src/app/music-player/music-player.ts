@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 import { AudioFileService } from '../audio-file-service/audio-file-service';
 import { BasicInformation} from '../basic-information/basic-information';
@@ -66,6 +66,13 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
     }
   }
 
+  onSpeedChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedSpeed = parseFloat(selectElement.value);
+
+    this.wave.setPlaybackRate(selectedSpeed, true);
+  }
+
   ngOnDestroy() {
     if (this.wave) {
       this.wave.destroy();
@@ -76,5 +83,35 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
     }
   }
 
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    const activeElement = document.activeElement as HTMLElement;
+    if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
+      return;
+    }
+
+    switch (event.key) {
+      case ' ':
+        event.preventDefault();
+        this.togglePlayback();
+        break;
+
+      case 'ArrowLeft':
+        event.preventDefault();
+        if (this.wave) {
+          this.wave.setTime(Math.max(0, this.wave.getCurrentTime() - 5));
+        }
+        break;
+
+      case 'ArrowRight': // Right Arrow
+        event.preventDefault();
+        if (this.wave) {
+          this.wave.setTime(Math.min(this.wave.getDuration(), this.wave.getCurrentTime() + 5));
+        }
+        break;
+    }
+  }
+
   protected readonly EventTarget = EventTarget;
+  protected readonly self = self;
 }
