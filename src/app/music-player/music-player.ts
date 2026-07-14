@@ -21,6 +21,7 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
   @ViewChild('waveformContainer') waveformContainer!: ElementRef;
 
   wave!: WaveSurfer;
+  volume: number = 1;
   audioFile: any;
   private audioUrl: string | null = null;
 
@@ -30,8 +31,11 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
     this.wave = WaveSurfer.create({
       container: this.waveformContainer.nativeElement,
       waveColor: '#f3e0ecff',
-      progressColor: '#dca3b8'
+      progressColor: '#dca3b8',
+      height: 'auto',
     });
+
+    this.volume = this.wave.getVolume();
 
     // Transfer current player timestamp tp current-player-timestamp-service
     this.wave.on('audioprocess', (currentTime: number) => {
@@ -71,4 +75,6 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
       URL.revokeObjectURL(this.audioUrl);
     }
   }
+
+  protected readonly EventTarget = EventTarget;
 }
