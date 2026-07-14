@@ -6,11 +6,11 @@ import { BasicInformation} from '../basic-information/basic-information';
 import WaveSurfer from 'wavesurfer.js';
 import { AnalysisResultComponent } from '../analysis-result/analysis-result';
 import { CurrentPlayerTimestampService } from '../current-player-timestamp-service/current-player-timestamp-service';
-
+import {LucideDynamicIcon, LucideFastForward, LucideRewind} from '@lucide/angular';
 @Component({
   selector: 'music-player',
   standalone: true,
-  imports: [BasicInformation, AnalysisResultComponent],
+  imports: [BasicInformation, AnalysisResultComponent, LucideRewind, LucideFastForward, LucideDynamicIcon],
   templateUrl: './music-player.html',
   styleUrl: './music-player.scss',
 })
@@ -22,6 +22,7 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
 
   wave!: WaveSurfer;
   volume: number = 1;
+  isPlaying: boolean = false;
   audioFile: any;
   private audioUrl: string | null = null;
 
@@ -63,6 +64,7 @@ export class MusicPlayer implements AfterViewInit, OnDestroy {
   togglePlayback() {
     if (this.wave) {
       this.wave.playPause();
+      this.isPlaying = this.wave.isPlaying();
     }
   }
 

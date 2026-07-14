@@ -10,10 +10,16 @@
     <div class="btn-group">
 <!--      TODO: ADD ICONS TO BUTTONS-->
       <button  class="btn rewind" (click)="wave.setTime(wave.getCurrentTime()-5)">
+        <svg lucideRewind> </svg>
       </button>
+
       <button (click)="togglePlayback()" class="btn btn-primary" >
+        <svg [lucideIcon]="isPlaying ? 'pause' : 'play'"></svg>
+
       </button>
+
       <button class="btn skip" (click)="wave.setTime(wave.getCurrentTime()+5)">
+        <svg lucideFastForward></svg>
       </button>
 
       <select class="dropdown-speed" (change)="onSpeedChange($event)">
