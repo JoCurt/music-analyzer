@@ -1,0 +1,81 @@
+#### MAIN ####
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
+
+# System files
+.DS_Store
+Thumbs.db
+
+######################
+
+
+#### CLIENT (music-analyzer/) ####
+
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+music-analyzer/dist
+music-analyzer/tmp
+music-analyzer/out-tsc
+music-analyzer/bazel-out
+
+# Node
+music-analyzer/node_modules
+music-analyzer/npm-debug.log
+music-analyzer/yarn-error.log
+
+# IDEs and editors
+music-analyzer/.idea/
+music-analyzer/.project
+music-analyzer/.classpath
+music-analyzer/.c9/
+music-analyzer/*.launch
+music-analyzer/.settings/
+music-analyzer/*.sublime-workspace
+
+# Visual Studio Code
+music-analyzer/.vscode/*
+music-analyzer/!.vscode/settings.json
+music-analyzer/!.vscode/tasks.json
+music-analyzer/!.vscode/launch.json
+music-analyzer/!.vscode/extensions.json
+music-analyzer!.vscode/mcp.json
+music-analyzer/.history/*
+
+# Miscellaneous
+music-analyzer/.angular/cache
+music-analyzer/.sass-cache/
+music-analyzer/connect.lock
+music-analyzer/coverage
+music-analyzer/libpeerconnection.log
+music-analyzer/testem.log
+music-analyzer/typings
+music-analyzer/__screenshots__/
+
+# System files
+music-analyzer/.DS_Store
+music-analyzer/Thumbs.db
+
+#####################################
+
+#### SERVER (server/) ####
+
+server/node_modules
+server/venv
+server/__pycache__
