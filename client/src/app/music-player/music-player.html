@@ -1,0 +1,41 @@
+<app-basic-information></app-basic-information>
+
+<app-analysis-result></app-analysis-result>
+
+<div class="player-bar">
+  <div class="waveform" #waveformContainer id="waveform"></div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn rewind" (click)="skip(-5)">
+        <svg lucideRewind></svg>
+      </button>
+
+      <button (click)="togglePlayback()" class="btn btn-primary">
+        <svg [lucideIcon]="isPlaying ? 'pause' : 'play'"></svg>
+      </button>
+
+      <button class="btn skip" (click)="skip(5)">
+        <svg lucideFastForward></svg>
+      </button>
+
+      <select class="dropdown-speed" (change)="onSpeedChange($event)">
+        <option value="0.5">0.5x</option>
+        <option value="1.0" selected>1.0x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2.0">2.0x</option>
+      </select>
+    </div>
+
+    <input
+      #volumeInput
+      type="range"
+      class="volume-slider"
+      min="0"
+      max="1"
+      step="0.01"
+      [value]="volume"
+      (input)="onVolumeChange(volumeInput.valueAsNumber)"
+    />
+  </div>
+</div>

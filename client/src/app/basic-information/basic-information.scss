@@ -1,0 +1,12 @@
+@use 'variables' as *;
+
+div {
+  position: sticky;
+  background-color: $player-background;
+  height: 15%;
+  width: 30%;
+}
+
+p {
+  margin: 0;
+}

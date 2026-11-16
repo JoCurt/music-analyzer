@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.chord-diagram-wrapper {
+  width: 100%;
+  max-width: 190px;
+  margin: 0 auto;
+
+  ::ng-deep svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
