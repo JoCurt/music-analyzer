@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, PercentPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AnalysisService, AnalysisStatus } from '../analysis-service/analysis-service';
 import { AnalysisResult, ChordEvent } from '../analysis-service/analysis-result.model';
@@ -10,7 +10,7 @@ import { ChordDiagramComponent } from '../chord-diagram/chord-diagram';
 @Component({
   selector: 'app-analysis-result',
   standalone: true,
-  imports: [DecimalPipe, ChordDiagramComponent],
+  imports: [DecimalPipe, PercentPipe, ChordDiagramComponent],
   templateUrl: './analysis-result.html',
   styleUrl: './analysis-result.scss',
 })
@@ -20,6 +20,7 @@ export class AnalysisResultComponent implements OnInit, OnDestroy {
   errorMessage: string | null = null;
 
   currentTimestampService = inject(CurrentPlayerTimestampService);
+  private analysisService = inject(AnalysisService);
   private audioFileService = inject(AudioFileService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -28,8 +29,6 @@ export class AnalysisResultComponent implements OnInit, OnDestroy {
   nextChord: ChordEvent | null = null;
 
   private subscriptions = new Subscription();
-
-  constructor(private analysisService: AnalysisService) {}
 
   ngOnInit(): void {
     this.subscriptions.add(

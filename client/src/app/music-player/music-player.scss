@@ -1,4 +1,5 @@
 @use 'variables' as *;
+
 .player-bar {
   position: fixed;
   bottom: 0;
@@ -25,7 +26,7 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  flex: 1; // takes the remaining space next to the waveform
+  flex: 1;
 }
 
 .btn-group {
@@ -48,37 +49,4 @@
   width: 100%;
   max-width: 140px;
   cursor: pointer;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-menu {
-  position: absolute;
-  bottom: calc(100% + 8px); // opens upward since it's in a bottom player bar
-  right: 0;
-  min-width: 160px;
-  background-color: $midnight-violet;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  padding: 4px;
-  z-index: 200;
-}
-
-.dropdown-item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 8px 12px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 4px;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
 }

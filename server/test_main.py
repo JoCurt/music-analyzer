@@ -108,8 +108,28 @@ class TestAnalyzeAudio(unittest.TestCase):
         self.assertGreaterEqual(len(result["chords"]), 1)
         self.assertEqual(result["chords"][0]["chord"], "C")
 
+    def test_analyze_audio_handles_zero_detected_beats(self):
+        sr = 22050
+        t = np.linspace(0, 1.0, sr, endpoint=False)
+        y = np.sin(2 * np.pi * 440.0 * t).astype(np.float32)
+
+        with patch.object(
+            main.librosa.beat, "beat_track", return_value=(0.0, np.array([], dtype=int))
+        ):
+            result = main.analyze_audio(y, sr)
+
+        self.assertEqual(result["tempo_bpm"], 0.0)
+        self.assertEqual(len(result["chords"]), 1)
+        self.assertEqual(result["chords"][0]["time"], 0.0)
+
 
 class TestAnalyzeEndpoint(unittest.IsolatedAsyncioTestCase):
+    async def test_health_endpoint_returns_ok(self):
+        transport = httpx.ASGITransport(app=main.app)
+        async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
+            resp = await client.get("/api/health")
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json(), {"status": "ok"})
     async def test_analyze_does_not_block_event_loop(self):
         wav_bytes = make_wav_bytes()
         original_analyze = main.analyze_audio

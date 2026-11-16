@@ -36,13 +36,13 @@ describe('BasicInformation', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display updated title and duration from AudioFileService', async () => {
+  it('should display updated title and formatted mm:ss duration from AudioFileService', async () => {
     titleSubject.next('my-song.mp3');
-    lengthSubject.next(142);
+    lengthSubject.next(142.4);
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('my-song.mp3');
-    expect(compiled.textContent).toContain('142s');
+    expect(compiled.textContent).toContain('2:22');
   });
 });

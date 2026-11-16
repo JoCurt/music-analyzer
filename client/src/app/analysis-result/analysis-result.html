@@ -5,7 +5,7 @@
   </div>
 } @else if (result) {
   <div class="basic-information">
-    <p><b>Key:</b> {{ result.key }}</p>
+    <p><b>Key:</b> {{ result.key }} ({{ result.key_confidence | percent:'1.0-0' }})</p>
     <p><b>Tempo:</b> {{ result.tempo_bpm }} BPM</p>
   </div>
 

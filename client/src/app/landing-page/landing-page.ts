@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AudioFileService } from '../audio-file-service/audio-file-service';
 import { AnalysisService } from '../analysis-service/analysis-service';
@@ -10,13 +10,11 @@ import { AnalysisService } from '../analysis-service/analysis-service';
   styleUrl: './landing-page.scss',
 })
 export class LandingPage {
-  readonly errorMessage = signal<string | null>(null);
+  private readonly audioFileService = inject(AudioFileService);
+  private readonly router = inject(Router);
+  private readonly analysisService = inject(AnalysisService);
 
-  constructor(
-    private audioFileService: AudioFileService,
-    private router: Router,
-    private analysisService: AnalysisService,
-  ) {}
+  readonly errorMessage = signal<string | null>(null);
 
   async onFileSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;

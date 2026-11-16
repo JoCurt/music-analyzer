@@ -1,12 +1,13 @@
 @use 'variables' as *;
 
 div {
-  position: sticky;
   background-color: $player-background;
-  height: 15%;
-  width: 30%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  max-width: 360px;
+  margin-bottom: 0.5rem;
 }
 
 p {
-  margin: 0;
+  margin: 0.15rem 0;
 }

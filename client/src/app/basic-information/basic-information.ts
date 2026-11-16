@@ -27,10 +27,20 @@ export class BasicInformation implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.audioFileService.getLengthObservable().subscribe((duration) => {
-        this.length = duration !== undefined ? `${duration}s` : undefined;
+        this.length = duration !== undefined ? this.formatDuration(duration) : undefined;
         this.cdr.markForCheck();
       }),
     );
+  }
+
+  formatDuration(seconds: number): string {
+    if (!Number.isFinite(seconds) || seconds < 0) {
+      return '0:00';
+    }
+    const rounded = Math.round(seconds);
+    const mins = Math.floor(rounded / 60);
+    const secs = rounded % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 
   ngOnDestroy(): void {

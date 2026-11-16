@@ -2,12 +2,13 @@
 
 .basic-information {
   background-color: $player-background;
-  width: 30%;
-  height: 15%;
-  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  max-width: 360px;
+  margin: 0.5rem 0;
 
   p {
-    margin: 0;
+    margin: 0.15rem 0;
   }
 }
 

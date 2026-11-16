@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AnalysisResult } from './analysis-result.model';
+import { environment } from '../../environments/environment';
 
 export type AnalysisStatus = 'idle' | 'loading' | 'success' | 'error';
 
@@ -9,14 +10,13 @@ export type AnalysisStatus = 'idle' | 'loading' | 'success' | 'error';
   providedIn: 'root',
 })
 export class AnalysisService {
-  private readonly apiUrl = 'http://localhost:8000/api/analyze';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = environment.apiUrl;
 
   private result$ = new BehaviorSubject<AnalysisResult | null>(null);
   private status$ = new BehaviorSubject<AnalysisStatus>('idle');
   private error$ = new BehaviorSubject<string | null>(null);
   private activeRequestSubscription: Subscription | null = null;
-
-  constructor(private http: HttpClient) {}
 
   getResultObservable(): Observable<AnalysisResult | null> {
     return this.result$.asObservable();
