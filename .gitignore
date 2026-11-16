@@ -25,52 +25,52 @@ Thumbs.db
 ######################
 
 
-#### CLIENT (music-analyzer/) ####
+#### CLIENT (client/) ####
 
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 # Compiled output
-music-analyzer/dist
-music-analyzer/tmp
-music-analyzer/out-tsc
-music-analyzer/bazel-out
+client/dist
+client/tmp
+client/out-tsc
+client/bazel-out
 
 # Node
-music-analyzer/node_modules
-music-analyzer/npm-debug.log
-music-analyzer/yarn-error.log
+client/node_modules
+client/npm-debug.log
+client/yarn-error.log
 
 # IDEs and editors
-music-analyzer/.idea/
-music-analyzer/.project
-music-analyzer/.classpath
-music-analyzer/.c9/
-music-analyzer/*.launch
-music-analyzer/.settings/
-music-analyzer/*.sublime-workspace
+client/.idea/
+client/.project
+client/.classpath
+client/.c9/
+client/*.launch
+client/.settings/
+client/*.sublime-workspace
 
 # Visual Studio Code
-music-analyzer/.vscode/*
-music-analyzer/!.vscode/settings.json
-music-analyzer/!.vscode/tasks.json
-music-analyzer/!.vscode/launch.json
-music-analyzer/!.vscode/extensions.json
-music-analyzer!.vscode/mcp.json
-music-analyzer/.history/*
+client/.vscode/*
+!client/.vscode/settings.json
+!client/.vscode/tasks.json
+!client/.vscode/launch.json
+!client/.vscode/extensions.json
+!client/.vscode/mcp.json
+client/.history/*
 
 # Miscellaneous
-music-analyzer/.angular/cache
-music-analyzer/.sass-cache/
-music-analyzer/connect.lock
-music-analyzer/coverage
-music-analyzer/libpeerconnection.log
-music-analyzer/testem.log
-music-analyzer/typings
-music-analyzer/__screenshots__/
+client/.angular/cache
+client/.sass-cache/
+client/connect.lock
+client/coverage
+client/libpeerconnection.log
+client/testem.log
+client/typings
+client/__screenshots__/
 
 # System files
-music-analyzer/.DS_Store
-music-analyzer/Thumbs.db
+client/.DS_Store
+client/Thumbs.db
 
 #####################################
 
@@ -78,4 +78,6 @@ music-analyzer/Thumbs.db
 
 server/node_modules
 server/venv
+server/.venv
 server/__pycache__
+server/*.pyc

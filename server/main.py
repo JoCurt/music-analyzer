@@ -18,6 +18,7 @@ import tempfile
 import numpy as np
 import librosa
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -136,13 +137,18 @@ def analyze_audio(y: np.ndarray, sr: int) -> dict:
 
     # Beat-synchronous chroma for stable chord estimates
     tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
-    chroma_sync = librosa.util.sync(chroma, beat_frames, aggregate=np.median)
-    beat_times = librosa.frames_to_time(beat_frames, sr=sr, hop_length=512)
+    if len(beat_frames) > 0:
+        chroma_sync = librosa.util.sync(chroma, beat_frames, aggregate=np.median)
+        beat_times = librosa.frames_to_time(beat_frames, sr=sr, hop_length=512)
 
-    # librosa.util.sync can return one extra leading column (segment before
-    # the first beat) — pad beat_times with 0.0 to keep them aligned.
-    if chroma_sync.shape[1] == len(beat_times) + 1:
-        beat_times = np.concatenate([[0.0], beat_times])
+        # librosa.util.sync can return one extra leading column (segment before
+        # the first beat) — pad beat_times with 0.0 to keep them aligned.
+        if chroma_sync.shape[1] == len(beat_times) + 1:
+            beat_times = np.concatenate([[0.0], beat_times])
+    else:
+        # Fallback when beat_track detects no beats (short or beatless audio)
+        chroma_sync = np.median(chroma, axis=1, keepdims=True)
+        beat_times = np.array([0.0])
 
     # Chord recognition (beat-level), collapsed to only show chord changes
     chord_templates = make_chord_templates()
@@ -178,31 +184,61 @@ def analyze_audio(y: np.ndarray, sr: int) -> dict:
 # API
 # ---------------------------------------------------------------------------
 
+MAX_UPLOAD_BYTES = 50 * 1024 * 1024  # 50 MB
+UPLOAD_CHUNK_SIZE = 1024 * 1024  # 1 MB
+
+
+async def save_upload_to_tempfile(
+    audio: UploadFile, max_bytes: int = MAX_UPLOAD_BYTES
+) -> str:
+    """
+    Stream an uploaded file to a temporary file on disk in chunks, enforcing
+    both non-empty and maximum size constraints without buffering the full
+    file in memory.
+    """
+    suffix = os.path.splitext(audio.filename or "")[1] or ".tmp"
+    total_bytes = 0
+    tmp_path = None
+
+    try:
+        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp_file:
+            tmp_path = tmp_file.name
+            while chunk := await audio.read(UPLOAD_CHUNK_SIZE):
+                total_bytes += len(chunk)
+                if total_bytes > max_bytes:
+                    raise HTTPException(
+                        status_code=413,
+                        detail=f"Uploaded file exceeds maximum size of {max_bytes // (1024 * 1024)} MB",
+                    )
+                tmp_file.write(chunk)
+
+        if total_bytes == 0:
+            raise HTTPException(status_code=400, detail="Uploaded file is empty")
+
+        return tmp_path
+    except Exception:
+        if tmp_path and os.path.exists(tmp_path):
+            os.remove(tmp_path)
+        raise
+    finally:
+        await audio.close()
+
+
 @app.post("/api/analyze")
 async def analyze(audio: UploadFile = File(...)):
     """
     Accepts an uploaded audio file (multipart/form-data, field name "audio")
     and returns its detected key and chord progression as JSON.
     """
-    contents = await audio.read()
-
-    if not contents:
-        raise HTTPException(status_code=400, detail="Uploaded file is empty")
-
     # Write to a temp file (preserving the original extension) rather than
     # loading from an in-memory buffer. librosa's fallback decoder
     # (audioread -> ffmpeg) shells out to the ffmpeg binary, which needs an
     # actual file path to read from reliably for containers like webm/mp4 -
     # in-memory BytesIO can silently fail that handoff.
-    suffix = os.path.splitext(audio.filename or "")[1] or ".tmp"
-    tmp_path = None
+    tmp_path = await save_upload_to_tempfile(audio)
     try:
-        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp_file:
-            tmp_file.write(contents)
-            tmp_path = tmp_file.name
-
         try:
-            y, sr = librosa.load(tmp_path, sr=22050)
+            y, sr = await run_in_threadpool(librosa.load, tmp_path, sr=22050)
         except Exception as exc:
             logger.exception("Failed to decode uploaded audio")
             raise HTTPException(status_code=422, detail=f"Could not decode audio: {exc}")
@@ -214,7 +250,7 @@ async def analyze(audio: UploadFile = File(...)):
         raise HTTPException(status_code=422, detail="Decoded audio is empty")
 
     try:
-        results = analyze_audio(y, sr)
+        results = await run_in_threadpool(analyze_audio, y, sr)
     except Exception as exc:
         logger.exception("Analysis failed")
         raise HTTPException(status_code=500, detail=f"Analysis failed: {exc}")
